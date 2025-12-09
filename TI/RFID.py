@@ -28,7 +28,7 @@ def read_card_id(rfid):
 
 def get_username(card_id):
     try:
-        with open("user_info.json", "r") as f:
+        with open("Data/user_info.json", "r") as f:
             users = json.load(f)
             return users.get(card_id, "Unknown User")
     except Exception as e:
@@ -51,7 +51,7 @@ def log_access(card_id, username):
 
     try:
         try:
-            with open("access_log.json", "r") as f:
+            with open("Data/access_log.json", "r") as f:
                 logs = json.load(f)
         except FileNotFoundError:
             logs = []
@@ -60,7 +60,7 @@ def log_access(card_id, username):
         logs.append(log_entry)
 
 
-        with open("access_log.json", "w") as f:
+        with open("Data/access_log.json", "w") as f:
             json.dump(logs, f, indent=2)
 
         print(f"Logged access: {username} ({card_id}) at {timestamp}")
