@@ -1,0 +1,27 @@
+[
+  {
+    "timestamp": "2025-10-27T10:30:45Z",
+    "tag_id": "0C9B5023",
+    "access_granted": true,
+    "user_name": "John Doe"
+  },
+  {
+    "timestamp": "2025-10-27T10:35:12Z",
+    "tag_id": "A1B2C3D4",
+    "access_granted": false,
+    "user_name": "Unknown"
+  },
+  {
+    "timestamp": "2025-10-27T10:40:22Z",
+    "tag_id": "0C9B5023",
+    "access_granted": true,
+    "user_name": "John Doe"
+  },
+  {
+  "timestamp": "2025-10-27T10:30:45Z",
+  "tag_id": "0C9B5023",
+  "access_granted": true,
+  "user_name": "John Doe"
+}
+
+]
