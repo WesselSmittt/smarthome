@@ -1,8 +1,40 @@
 import random
-import verlichting_check
-import gas_check
-import verwarming_check
-import water_check
+
+def verlichting_check(status):
+    print("Controle van verlichting...")
+    nieuw_status = not status  # toggle status
+    if not nieuw_status:
+        print("Het licht is nu uit.")
+    else:
+        print("Het licht is nu aan.")
+    return nieuw_status
+
+def gas_check(status):
+    print("Controle van gas...")
+    nieuw_status = not status
+    if not nieuw_status:
+        print("Het gas is nu dicht.")
+    else:
+        print("Het gas is nu open.")
+    return nieuw_status
+
+def verwarming_check(status):
+    print("Controle van verwarming...")
+    nieuw_status = not status
+    if not nieuw_status:
+        print("De verwarming is nu uit.")
+    else:
+        print("De verwarming is nu aan.")
+    return nieuw_status
+
+def water_check(status):
+    print("Controle van water...")
+    nieuw_status = not status
+    if not nieuw_status:
+        print("Het water is nu dicht.")
+    else:
+        print("Het water is nu open.")
+    return nieuw_status
 
 class HuisSimulatie:
     def __init__(self):
@@ -13,11 +45,22 @@ class HuisSimulatie:
         self.water_open = random.choice([True, False])
 
     def status(self):
-        print("=== Huidige status van het huis ===")
+        print("\n=== Huidige status van het huis ===")
         print("Licht:", "aan" if self.licht_aan else "uit")
         print("Gas:", "open" if self.gas_aan else "dicht")
         print("Verwarming:", "aan" if self.verwarming_aan else "uit")
         print("Water:", "open" if self.water_open else "dicht")
+
+    def alles_uit(self):
+        self.licht_aan = False
+        self.gas_aan = False
+        self.verwarming_aan = False
+        self.water_open = False
+        print("\nAlle functies zijn uitgezet!")
+        print("Het licht is nu uit.")
+        print("Het gas is nu dicht.")
+        print("De verwarming is nu uit.")
+        print("Het water is nu dicht.")
 
     def kies_actie(self):
         print("\nWat wilt u controleren?")
@@ -25,7 +68,9 @@ class HuisSimulatie:
         print("2. Gas")
         print("3. Verwarming")
         print("4. Water")
-        keuze = input("Maak een keuze (1-4): ").strip()
+        print("5. Alles uitzetten")
+        print("Typ 'stop' om te stoppen.")
+        keuze = input("Maak een keuze (1-5 of 'stop'): ").strip().lower()
 
         if keuze == "1":
             self.licht_aan = verlichting_check(self.licht_aan)
@@ -35,13 +80,22 @@ class HuisSimulatie:
             self.verwarming_aan = verwarming_check(self.verwarming_aan)
         elif keuze == "4":
             self.water_open = water_check(self.water_open)
+        elif keuze == "5":
+            self.alles_uit()
+        elif keuze == "stop":
+            return False  # beëindig loop
         else:
             print("Ongeldige keuze.")
 
         self.status()
+        return True  # blijf doorgaan
 
+# hoofdprogramma
 huis = HuisSimulatie()
 huis.status()
 
-# gebruiker kan kiezen wat hij wil checken
-huis.kies_actie()
+while True:
+    doorgaan = huis.kies_actie()
+    if not doorgaan:
+        print("\nProgramma gestopt. Tot ziens!")
+        break
