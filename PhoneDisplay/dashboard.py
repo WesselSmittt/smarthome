@@ -141,7 +141,6 @@ def update_weather(_):
         return [
             html.Small("☀️ Utrecht"),
             html.H1(f"{temp}°C"),
-            html.Small("Utrecht"),
             html.P(description),
             html.Div(className="weather-row", children=[
                 html.Div(f"💧 Humidity {humidity}%"),
