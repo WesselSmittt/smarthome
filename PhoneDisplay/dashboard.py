@@ -1,5 +1,5 @@
 import dash
-from dash import html, Input, Output, State, dcc
+from dash import html, Input, Output, dcc
 import datetime, random, requests
 
 # -----------------------------
@@ -106,23 +106,6 @@ app.layout = html.Div(className="page", children=[
 
         html.Br(),
 
-        # Login card
-        html.Div(className="card login", children=[
-            html.H3("🔐 Login"),
-            html.Div(className="login-row", children=[
-                html.Label("Username"),
-                dcc.Input(id="login-username", type="text", placeholder="Enter username", className="input")
-            ]),
-            html.Div(className="login-row", children=[
-                html.Label("Password"),
-                dcc.Input(id="login-password", type="password", placeholder="Enter password", className="input")
-            ]),
-            html.Button("Login", id="login-btn", className="btn-login"),
-            html.Div(id="login-status", className="login-status")
-        ]),
-
-        html.Br(),
-
         # Utilities
         html.Div(className="utilities", children=[
             card("Light", "light", "💡"),
@@ -168,27 +151,6 @@ def update_weather(_):
     except Exception as e:
         return [html.Small("Weather unavailable"), html.P(str(e))]
 
-# -----------------------------
-# Login Callback
-# -----------------------------
-@app.callback(
-    Output("login-status", "children"),
-    Output("login-status", "className"),
-    Input("login-btn", "n_clicks"),
-    State("login-username", "value"),
-    State("login-password", "value"),
-    prevent_initial_call=True
-)
-def handle_login(n_clicks, username, password):
-    if not username or not password:
-        return "Please enter both username and password.", "login-status error"
-
-    # Demo credentials (replace with real auth)
-    valid_users = {"admin": "secret123", "user": "pass123"}
-    if username in valid_users and password == valid_users[username]:
-        return f"Welcome, {username}! You are logged in.", "login-status success"
-    else:
-        return "Invalid username or password.", "login-status error"
 
 # -----------------------------
 # Utility Callback
@@ -231,7 +193,6 @@ def update(*args):
                         children=[
                             html.Div(className="log-title",
                                      children=f"Simulation toggled: {', '.join(c.capitalize() for c in choices)}"),
-                            html.Div(className="log-time", children=time),
                             html.Span("Mixed", className="badge simulate")
                         ]
                     )
