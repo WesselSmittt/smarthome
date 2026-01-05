@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bebc3841-329a-44ac-9bee-70821b0ef1ca" name="Changes" comment="Login weggehaald" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Functies.ver-1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SeanMael&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WesselSmittt/smarthome&quot;,
+    &quot;accountId&quot;: &quot;3cf9f5bd-ee78-4d29-b729-b15190b65a38&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;WesselSmittt&quot;,
+    &quot;repository&quot;: &quot;smarthome&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/functions/verlichting_check.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="35edl1VEdS1FoPvhEBzxrRz2edR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.app.executor": "Run",
+    "Python.dashboard.executor": "Run",
+    "Python.gas_check.executor": "Run",
+    "Python.simulatie.executor": "Run",
+    "Python.smarthome.executor": "Run",
+    "Python.smarthome_app.executor": "Run",
+    "Python.testtt.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="smarthome" type="PythonConfigurationType" factoryName="Python">
+      <module name="smarthome" />
+      <option name="ENV_FILES" value="app.py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="app" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PY-252.25557.178" />
+        <option value="bundled-python-sdk-ce6832f46686-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.178" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bebc3841-329a-44ac-9bee-70821b0ef1ca" name="Changes" comment="" />
+      <created>1763474618550</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763474618550</updated>
+      <workItem from="1763474619959" duration="6779000" />
+      <workItem from="1763642631308" duration="60000" />
+      <workItem from="1763979916312" duration="313000" />
+      <workItem from="1764540372448" duration="858000" />
+      <workItem from="1764542159212" duration="130000" />
+      <workItem from="1764850336463" duration="35000" />
+      <workItem from="1765182888033" duration="3232000" />
+      <workItem from="1765291722006" duration="1217000" />
+      <workItem from="1765738256994" duration="2141000" />
+      <workItem from="1765787213671" duration="4696000" />
+      <workItem from="1765888793391" duration="3431000" />
+      <workItem from="1765892275090" duration="3203000" />
+      <workItem from="1765896242010" duration="196000" />
+      <workItem from="1767600654052" duration="1659000" />
+    </task>
+    <task id="LOCAL-00001" summary="readme aangepast met een korte introductie">
+      <option name="closed" value="true" />
+      <created>1763475138793</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763475138793</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Functies zijn toegevoegd">
+      <option name="closed" value="true" />
+      <created>1763478716001</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763478716001</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Verlichting_check bekijkt nu of verlichting aan is of niet">
+      <option name="closed" value="true" />
+      <created>1763483182708</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763483182708</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Functies aangepast, nieuwe functies toegevoegd en een simulatie klasse aangemaakt die een random situatie simuleert">
+      <option name="closed" value="true" />
+      <created>1764541166388</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764541166388</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Functies aangepast, nieuwe functies toegevoegd en een simulatie klasse aangemaakt die een random situatie simuleert">
+      <option name="closed" value="true" />
+      <created>1764541179078</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1764541179078</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Simulatie functie toegevoegd en dashboard aangemaakt die nu werkend is">
+      <option name="closed" value="true" />
+      <created>1765794233654</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765794233654</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Dashboard heb ik verder aangepast nu is er een deur en simulatie button toegevoegd.">
+      <option name="closed" value="true" />
+      <created>1765892335604</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1765892335604</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Login met username en wachtwoord heb ik toegevoegd zodat de gebruiker kan ingloggen">
+      <option name="closed" value="true" />
+      <created>1765892891136</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765892891136</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Login weggehaald">
+      <option name="closed" value="true" />
+      <created>1767601848242</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1767601848242</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ja" />
+    <MESSAGE value="readme aangepast met een korte introductie" />
+    <MESSAGE value="Functies zijn toegevoegd" />
+    <MESSAGE value="Verlichting_check bekijkt nu of verlichting aan is of niet" />
+    <MESSAGE value="Functies aangepast, nieuwe functies toegevoegd en een simulatie klasse aangemaakt die een random situatie simuleert" />
+    <MESSAGE value="Simulatie functie toegevoegd en dashboard aangemaakt die nu werkend is" />
+    <MESSAGE value="Dashboard heb ik verder aangepast nu is er een deur en simulatie button toegevoegd." />
+    <MESSAGE value="Login met username en wachtwoord heb ik toegevoegd zodat de gebruiker kan ingloggen" />
+    <MESSAGE value="Login weggehaald" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login weggehaald" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/PhoneDisplay/dashboard.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/smarthome$simulatie.coverage" NAME="simulatie Coverage Results" MODIFIED="1765183255479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/functions" />
+    <SUITE FILE_PATH="coverage/smarthome$gas_check.coverage" NAME="gas_check Coverage Results" MODIFIED="1763483011926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/functions" />
+    <SUITE FILE_PATH="coverage/smarthome$smarthome_app.coverage" NAME="smarthome_app Coverage Results" MODIFIED="1765292303065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+    <SUITE FILE_PATH="coverage/smarthome$dashboard.coverage" NAME="dashboard Coverage Results" MODIFIED="1767601124478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+    <SUITE FILE_PATH="coverage/smarthome$testtt.coverage" NAME="testtt Coverage Results" MODIFIED="1765292244522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+    <SUITE FILE_PATH="coverage/smarthome$app.coverage" NAME="app Coverage Results" MODIFIED="1765789604496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+  </component>
+</project>
