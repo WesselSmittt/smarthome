@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bebc3841-329a-44ac-9bee-70821b0ef1ca" name="Changes" comment="Login weggehaald">
-      <change afterPath="$PROJECT_DIR$/PhoneDisplay/CodeTests/TestButtons.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PhoneDisplay/CodeTests/TestSimulationFunction.py" afterDir="false" />
+    <list default="true" id="bebc3841-329a-44ac-9bee-70821b0ef1ca" name="Changes" comment="Testunits gemaakt voor de code">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PhoneDisplay/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/PhoneDisplay/dashboard.py" afterDir="false" />
     </list>
@@ -66,29 +66,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.dashboard.executor&quot;: &quot;Run&quot;,
-    &quot;Python.gas_check.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simulatie.executor&quot;: &quot;Run&quot;,
-    &quot;Python.smarthome.executor&quot;: &quot;Run&quot;,
-    &quot;Python.smarthome_app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.testtt.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.TestButtons.executor": "Run",
+    "Python.TestSimulationFunction.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.dashboard.executor": "Run",
+    "Python.gas_check.executor": "Run",
+    "Python.simulatie.executor": "Run",
+    "Python.smarthome.executor": "Run",
+    "Python.smarthome_app.executor": "Run",
+    "Python.testtt.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\seanm\PycharmProjects\smarthome\PhoneDisplay" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="smarthome" type="PythonConfigurationType" factoryName="Python">
       <module name="smarthome" />
@@ -143,7 +156,9 @@
       <workItem from="1765888793391" duration="3431000" />
       <workItem from="1765892275090" duration="3203000" />
       <workItem from="1765896242010" duration="196000" />
-      <workItem from="1767600654052" duration="2719000" />
+      <workItem from="1767600654052" duration="2901000" />
+      <workItem from="1767606697240" duration="5000" />
+      <workItem from="1767607438303" duration="1453000" />
     </task>
     <task id="LOCAL-00001" summary="readme aangepast met een korte introductie">
       <option name="closed" value="true" />
@@ -225,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767602336298</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Testunits gemaakt voor de code">
+      <option name="closed" value="true" />
+      <created>1767603505494</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1767603505494</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,14 +264,15 @@
     <MESSAGE value="Dashboard heb ik verder aangepast nu is er een deur en simulatie button toegevoegd." />
     <MESSAGE value="Login met username en wachtwoord heb ik toegevoegd zodat de gebruiker kan ingloggen" />
     <MESSAGE value="Login weggehaald" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login weggehaald" />
+    <MESSAGE value="Testunits gemaakt voor de code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testunits gemaakt voor de code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/PhoneDisplay/dashboard.py</url>
-          <line>194</line>
+          <line>263</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -259,7 +283,10 @@
     <SUITE FILE_PATH="coverage/smarthome$gas_check.coverage" NAME="gas_check Coverage Results" MODIFIED="1763483011926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/functions" />
     <SUITE FILE_PATH="coverage/smarthome$smarthome_app.coverage" NAME="smarthome_app Coverage Results" MODIFIED="1765292303065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
     <SUITE FILE_PATH="coverage/smarthome$dashboard.coverage" NAME="dashboard Coverage Results" MODIFIED="1767602910692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+    <SUITE FILE_PATH="coverage/smarthome$TestSimulationFunction.coverage" NAME="TestSimulationFunction Coverage Results" MODIFIED="1767603478411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay/CodeTests" />
     <SUITE FILE_PATH="coverage/smarthome$testtt.coverage" NAME="testtt Coverage Results" MODIFIED="1765292244522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
     <SUITE FILE_PATH="coverage/smarthome$app.coverage" NAME="app Coverage Results" MODIFIED="1765789604496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
+    <SUITE FILE_PATH="coverage/smarthome$TestButtons.coverage" NAME="TestButtons Coverage Results" MODIFIED="1767603484993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay/CodeTests" />
+    <SUITE FILE_PATH="coverage/misc_xml$dashboard.coverage" NAME="dashboard Coverage Results" MODIFIED="1767608383230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PhoneDisplay" />
   </component>
 </project>

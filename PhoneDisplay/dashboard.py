@@ -1,12 +1,71 @@
 import dash
 from dash import html, Input, Output, dcc
 import datetime, random, requests
+import psycopg2
+
+# -----------------------------
+# PostgreSQL Configuration
+# -----------------------------
+DB_CONFIG = {
+    "host": "4.233.149.11",
+    "port": 5432,
+    "database": "postgres",
+    "user": "keita",
+    "password": "M9Q@Z!6w5$CAX7kP"
+}
+
+def db_connect():
+    return psycopg2.connect(**DB_CONFIG)
+
+def init_db():
+    conn = db_connect()
+    cur = conn.cursor()
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS devices (
+            id SERIAL PRIMARY KEY,
+            name TEXT UNIQUE,
+            status BOOLEAN
+        );
+    """)
+    conn.commit()
+
+    cur.execute("SELECT COUNT(*) FROM devices;")
+    count = cur.fetchone()[0]
+
+    if count == 0:
+        cur.executemany(
+            "INSERT INTO devices (name, status) VALUES (%s, %s);",
+            [
+                ("Light", True),
+                ("Gas", False),
+                ("Heating", True),
+                ("Water", False),
+                ("Door", False)
+            ]
+        )
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
+def get_db_devices():
+    conn = db_connect()
+    cur = conn.cursor()
+    cur.execute("SELECT name, status FROM devices ORDER BY id;")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
+
+# Initialize DB on startup
+init_db()
 
 # -----------------------------
 # Weather API (Open-Meteo Utrecht)
 # -----------------------------
 def get_weather():
-    lat, lon = 52.09, 5.12  # Utrecht
+    lat, lon = 52.09, 5.12
     url = (
         f"https://api.open-meteo.com/v1/forecast"
         f"?latitude={lat}&longitude={lon}"
@@ -20,15 +79,15 @@ def get_weather():
     wind = current["windspeed"]
     code = current["weathercode"]
 
-    # Get humidity from the first hourly value
     humidity = data["hourly"]["relativehumidity_2m"][0]
 
     weather_codes = {
         0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
-        45: "Fog", 48: "Depositing rime fog", 51: "Light drizzle", 53: "Moderate drizzle",
-        55: "Dense drizzle", 61: "Slight rain", 63: "Moderate rain", 65: "Heavy rain",
-        71: "Slight snow fall", 73: "Moderate snow fall", 75: "Heavy snow fall",
-        95: "Thunderstorm", 96: "Thunderstorm with slight hail", 99: "Thunderstorm with heavy hail"
+        45: "Fog", 48: "Depositing rime fog", 51: "Light drizzle",
+        53: "Moderate drizzle", 55: "Dense drizzle", 61: "Slight rain",
+        63: "Moderate rain", 65: "Heavy rain", 71: "Slight snow fall",
+        73: "Moderate snow fall", 75: "Heavy snow fall", 95: "Thunderstorm",
+        96: "Thunderstorm with slight hail", 99: "Thunderstorm with heavy hail"
     }
     description = weather_codes.get(code, f"Weather code {code}")
 
@@ -72,8 +131,7 @@ def toggle(key, label):
     status[key] = not status[key]
     log_change(label, status[key])
 
-def card(name, key, icon):
-    on = status[key]
+def card(name, key, icon, on):
     return html.Div(
         id=f"{key}-card",
         className=f"utility {'on '+key if on else 'off'}",
@@ -100,7 +158,7 @@ app.layout = html.Div(className="page", children=[
     # Left column
     html.Div(children=[
 
-        # Weather card (dynamic)
+        # Weather card
         html.Div(id="weather-card", className="card weather"),
         dcc.Interval(id="weather-interval", interval=60000, n_intervals=0),
 
@@ -108,23 +166,34 @@ app.layout = html.Div(className="page", children=[
 
         # Utilities
         html.Div(className="utilities", children=[
-            card("Light", "light", "💡"),
-            card("Gas", "gas", "💨"),
-            card("Heating", "heating", "🔥"),
-            card("Water", "water", "🚰"),
-            card("Door", "door", "🚪"),
+            card("Light", "light", "💡", status["light"]),
+            card("Gas", "gas", "💨", status["gas"]),
+            card("Heating", "heating", "🔥", status["heating"]),
+            card("Water", "water", "🚰", status["water"]),
+            card("Door", "door", "🚪", status["door"]),
         ]),
 
         html.Br(),
 
-        # Simulation button
         html.Button("Simulate Random Change", id="simulate-btn", className="btn-simulate")
     ]),
 
     # Right column
-    html.Div(className="card recent", children=[
-        html.H3("🕒 Recent Changes"),
-        html.Div(id="recent-log")
+    html.Div(children=[
+
+        html.Div(className="card recent", children=[
+            html.H3("🕒 Recent Changes"),
+            html.Div(id="recent-log")
+        ]),
+
+        html.Br(),
+
+        html.Div(className="card db-info", children=[
+            html.H3("📦 Database Devices"),
+            html.Div(id="db-output")
+        ]),
+
+        dcc.Interval(id="db-interval", interval=5000, n_intervals=0)
     ])
 ])
 
@@ -149,7 +218,6 @@ def update_weather(_):
         ]
     except Exception as e:
         return [html.Small("Weather unavailable"), html.P(str(e))]
-
 
 # -----------------------------
 # Utility Callback
@@ -183,8 +251,9 @@ def update(*args):
             choices = random.sample(keys, num_to_toggle)
             for choice in choices:
                 status[choice] = not status[choice]
+
+            time = datetime.datetime.now().strftime("%I:%M:%S %p")
             if choices:
-                time = datetime.datetime.now().strftime("%I:%M:%S %p")
                 recent_changes.insert(
                     0,
                     html.Div(
@@ -196,10 +265,7 @@ def update(*args):
                         ]
                     )
                 )
-                if len(recent_changes) > 5:
-                    recent_changes.pop()
             else:
-                time = datetime.datetime.now().strftime("%I:%M:%S %p")
                 recent_changes.insert(
                     0,
                     html.Div(
@@ -211,17 +277,38 @@ def update(*args):
                         ]
                     )
                 )
-                if len(recent_changes) > 5:
-                    recent_changes.pop()
+
+            if len(recent_changes) > 5:
+                recent_changes.pop()
 
     return (
-        card("Light", "light", "💡").children,
-        card("Gas", "gas", "💨").children,
-        card("Heating", "heating", "🔥").children,
-        card("Water", "water", "🚰").children,
-        card("Door", "door", "🚪").children,
+        card("Light", "light", "💡", status["light"]).children,
+        card("Gas", "gas", "💨", status["gas"]).children,
+        card("Heating", "heating", "🔥", status["heating"]).children,
+        card("Water", "water", "🚰", status["water"]).children,
+        card("Door", "door", "🚪", status["door"]).children,
         recent_changes
     )
+
+# -----------------------------
+# Database Display Callback
+# -----------------------------
+@app.callback(
+    Output("db-output", "children"),
+    Input("db-interval", "n_intervals")
+)
+def update_db(_):
+    try:
+        rows = get_db_devices()
+        return [
+            html.Div(className="db-row", children=[
+                html.Span(name, className="db-name"),
+                html.Span("On" if state else "Off",
+                          className=f"badge {'on' if state else 'off'}")
+            ]) for name, state in rows
+        ]
+    except Exception as e:
+        return html.Div(f"Database error: {e}")
 
 # -----------------------------
 # Main
