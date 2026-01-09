@@ -2,25 +2,36 @@ import dash
 from dash import html, Input, Output, dcc
 import datetime, random, requests
 import psycopg2
+from dotenv import load_dotenv
+import os
 
 # -----------------------------
 # PostgreSQL Configuration
 # -----------------------------
+load_dotenv()  # Load .env file
+
 DB_CONFIG = {
-    "host": "4.233.149.11",
-    "port": 5432,
-    "database": "postgres",
-    "user": "keita",
-    "password": "M9Q@Z!6w5$CAX7kP"
+    "host": os.getenv("DB_HOST"),
+    "port": int(os.getenv("DB_PORT")),
+    "database": os.getenv("DB_NAME"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD")
 }
 
 def db_connect():
-    return psycopg2.connect(**DB_CONFIG)
+    try:
+        return psycopg2.connect(**DB_CONFIG)
+    except Exception as e:
+        print("Database connection failed:", e)
+        return None
 
 def init_db():
     conn = db_connect()
-    cur = conn.cursor()
+    if conn is None:
+        print("Skipping DB initialization (database offline)")
+        return
 
+    cur = conn.cursor()
     cur.execute("""
         CREATE TABLE IF NOT EXISTS devices (
             id SERIAL PRIMARY KEY,
@@ -51,6 +62,9 @@ def init_db():
 
 def get_db_devices():
     conn = db_connect()
+    if conn is None:
+        return None  # Database offline
+
     cur = conn.cursor()
     cur.execute("SELECT name, status FROM devices ORDER BY id;")
     rows = cur.fetchall()
@@ -298,17 +312,19 @@ def update(*args):
     Input("db-interval", "n_intervals")
 )
 def update_db(_):
-    try:
-        rows = get_db_devices()
-        return [
-            html.Div(className="db-row", children=[
-                html.Span(name, className="db-name"),
-                html.Span("On" if state else "Off",
-                          className=f"badge {'on' if state else 'off'}")
-            ]) for name, state in rows
-        ]
-    except Exception as e:
-        return html.Div(f"Database error: {e}")
+    rows = get_db_devices()
+
+    # FIX: Always return a LIST to keep Dash stable
+    if rows is None:
+        return [html.Div("Database offline")]
+
+    return [
+        html.Div(className="db-row", children=[
+            html.Span(name, className="db-name"),
+            html.Span("On" if state else "Off",
+                      className=f"badge {'on' if state else 'off'}")
+        ]) for name, state in rows
+    ]
 
 # -----------------------------
 # Main
