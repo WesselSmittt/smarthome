@@ -52,3 +52,37 @@ Het dashboard combineert real‑time weerinformatie, slimme apparaatstatussen en
 - Databasegegevens worden niet in de code opgeslagen.
 - De app leest host, user, password, etc. uit een .env‑bestand.
 - Dit voorkomt dat gevoelige gegevens in Git terechtkomen.
+
+## Sensoren
+-De hardware maakt gebruik van meerdere modules om events te meten en acties uit te voeren.
+
+## RFID_Authentication
+- RC522 leest de RFID-tag (UID) uit.
+
+- UID wordt vergeleken met geregistreerde gebruikers.
+
+- Resultaat: toegang toegestaan/geweigerd + logregel (ACCESS_LOG).
+## Servo motor 
+- Servo kan als actuator dienen (bijv. deur/slot simulatie).
+
+- Beweegt naar een ingestelde hoek bij “Access granted” en keert terug naar startpositie.
+
+## LDR sensor
+- Meet lichtsterkte via analoge input.
+
+- Logt: raw ADC-waarde, berekende spanning en lichtniveau (bijv. Dark/Dim/Normal/Bright).
+
+- Wordt opgeslagen als LDR_LOG.
+
+## OLED scherm
+- Toont systeemstatus (scannen, toegang toegestaan/geweigerd).
+
+- Geeft directe feedback zonder console nodig.
+
+## Data versturen naar database via SSH tunnel
+- Pico stuurt logs via USB/serieel naar een Raspberry Pi.
+
+- bridge.py leest de logs, parseert JSON en schrijft naar PostgreSQL.
+
+- SSH-tunnel beveiligt de verbinding zonder de databasepoort publiek open te zetten.
+
