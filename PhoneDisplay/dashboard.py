@@ -8,7 +8,7 @@ import os
 # -----------------------------
 # PostgreSQL Configuration
 # -----------------------------
-load_dotenv()  # Load .env file
+load_dotenv()
 
 DB_CONFIG = {
     "host": os.getenv("DB_HOST"),
@@ -25,58 +25,79 @@ def db_connect():
         print("Database connection failed:", e)
         return None
 
-def init_db():
-    conn = db_connect()
-    if conn is None:
-        print("Skipping DB initialization (database offline)")
-        return
+# -----------------------------
+# SENSOR FUNCTIONS (LDR + RFID)
+# -----------------------------
+def get_light_state_from_ldr():
+    try:
+        conn = db_connect()
+        if conn is None:
+            return None
 
-    cur = conn.cursor()
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS devices (
-            id SERIAL PRIMARY KEY,
-            name TEXT UNIQUE,
-            status BOOLEAN
-        );
-    """)
-    conn.commit()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT light_level
+            FROM ldr_readings
+            ORDER BY timestamp DESC
+            LIMIT 1;
+        """)
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
 
-    cur.execute("SELECT COUNT(*) FROM devices;")
-    count = cur.fetchone()[0]
+        if row is None:
+            return None
 
-    if count == 0:
-        cur.executemany(
-            "INSERT INTO devices (name, status) VALUES (%s, %s);",
-            [
-                ("Light", True),
-                ("Gas", False),
-                ("Heating", True),
-                ("Water", False),
-                ("Door", False)
-            ]
-        )
-        conn.commit()
+        LDR_THRESHOLD = 500
+        return row[0] > LDR_THRESHOLD
 
-    cur.close()
-    conn.close()
+    except Exception as e:
+        print("LDR read failed:", e)
+        return None
 
-def get_db_devices():
-    conn = db_connect()
-    if conn is None:
-        return None  # Database offline
 
-    cur = conn.cursor()
-    cur.execute("SELECT name, status FROM devices ORDER BY id;")
-    rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    return rows
+def get_door_state_from_rfid():
+    try:
+        conn = db_connect()
+        if conn is None:
+            return None
 
-# Initialize DB on startup
-init_db()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT timestamp
+            FROM rfid_checkin
+            ORDER BY timestamp DESC
+            LIMIT 1;
+        """)
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if row is None:
+            return None
+
+        now = datetime.datetime.now(datetime.timezone.utc)
+        return (now - row[0]).total_seconds() < 10
+
+    except Exception as e:
+        print("RFID read failed:", e)
+        return None
+
+
+def refresh_status_from_sensors(status):
+    light = get_light_state_from_ldr()
+    door = get_door_state_from_rfid()
+
+    if light is not None:
+        status["light"] = light
+
+    if door is not None:
+        status["door"] = door
+
+    return status
 
 # -----------------------------
-# Weather API (Open-Meteo Utrecht)
+# Weather API
 # -----------------------------
 def get_weather():
     lat, lon = 52.09, 5.12
@@ -141,25 +162,30 @@ def log_change(name, state):
     if len(recent_changes) > 5:
         recent_changes.pop()
 
+
 def toggle(key, label):
     status[key] = not status[key]
     log_change(label, status[key])
 
+
 def card(name, key, icon, on):
+    auto = key in ("light", "door")
+
     return html.Div(
         id=f"{key}-card",
         className=f"utility {'on '+key if on else 'off'}",
         children=[
             html.H3(f"{icon} {name}"),
-            html.Small("On" if on else "Off"),
+            html.Small("Auto" if auto else ("On" if on else "Off")),
             html.Div(className="status", children=[
                 html.Span("Status"),
                 html.Span("On" if on else "Off")
             ]),
             html.Button(
-                "Turn Off" if on else "Turn On",
+                "Auto" if auto else ("Turn Off" if on else "Turn On"),
                 id=f"{key}-btn",
-                className="btn-off" if on else "btn-on"
+                disabled=auto,
+                className="btn-disabled" if auto else ("btn-off" if on else "btn-on")
             )
         ]
     )
@@ -198,16 +224,7 @@ app.layout = html.Div(className="page", children=[
         html.Div(className="card recent", children=[
             html.H3("🕒 Recent Changes"),
             html.Div(id="recent-log")
-        ]),
-
-        html.Br(),
-
-        html.Div(className="card db-info", children=[
-            html.H3("📦 Database Devices"),
-            html.Div(id="db-output")
-        ]),
-
-        dcc.Interval(id="db-interval", interval=5000, n_intervals=0)
+        ])
     ])
 ])
 
@@ -251,18 +268,26 @@ def update_weather(_):
     Input("simulate-btn", "n_clicks"),
 )
 def update(*args):
+    global status
+
+    # AUTO SENSOR UPDATE
+    status = refresh_status_from_sensors(status)
+
     ctx = dash.callback_context
     if ctx.triggered:
         btn = ctx.triggered[0]["prop_id"].split(".")[0]
-        if btn == "light-btn": toggle("light", "Light")
+
+        # Manual toggles (only for non-sensor devices)
         if btn == "gas-btn": toggle("gas", "Gas")
         if btn == "heating-btn": toggle("heating", "Heating")
         if btn == "water-btn": toggle("water", "Water")
-        if btn == "door-btn": toggle("door", "Door")
+
+        # SIMULATION — ONLY gas/heating/water
         if btn == "simulate-btn":
-            keys = list(status.keys())
-            num_to_toggle = random.randint(0, len(keys))
-            choices = random.sample(keys, num_to_toggle)
+            sim_keys = ["gas", "heating", "water"]
+            num_to_toggle = random.randint(0, len(sim_keys))
+            choices = random.sample(sim_keys, num_to_toggle)
+
             for choice in choices:
                 status[choice] = not status[choice]
 
@@ -305,29 +330,9 @@ def update(*args):
     )
 
 # -----------------------------
-# Database Display Callback
-# -----------------------------
-@app.callback(
-    Output("db-output", "children"),
-    Input("db-interval", "n_intervals")
-)
-def update_db(_):
-    rows = get_db_devices()
-
-    # FIX: Always return a LIST to keep Dash stable
-    if rows is None:
-        return [html.Div("Database offline")]
-
-    return [
-        html.Div(className="db-row", children=[
-            html.Span(name, className="db-name"),
-            html.Span("On" if state else "Off",
-                      className=f"badge {'on' if state else 'off'}")
-        ]) for name, state in rows
-    ]
-
-# -----------------------------
 # Main
 # -----------------------------
 if __name__ == "__main__":
     app.run(debug=True)
+
+
