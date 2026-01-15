@@ -129,6 +129,31 @@ def get_weather():
     return temp, humidity, wind, description
 
 # -----------------------------
+# WEEKLY ENERGY DATA (Example Lines)
+# -----------------------------
+def generate_weekly_energy_data():
+    days = []
+    used = []
+    saved = []
+    baseline = []
+
+    for i in range(7):
+        day = (datetime.datetime.now() - datetime.timedelta(days=6 - i)).strftime("%a")
+        days.append(day)
+
+        u = round(random.uniform(12, 22), 2)   # realistic usage
+        s = round(random.uniform(0.5, 1.4), 2) # realistic savings
+        b = round(u + s, 2)                    # baseline
+
+        used.append(u)
+        saved.append(s)
+        baseline.append(b)
+
+    return days, used, saved, baseline
+
+weekly_days, weekly_used, weekly_saved, weekly_baseline = generate_weekly_energy_data()
+
+# -----------------------------
 # App & State
 # -----------------------------
 app = dash.Dash(__name__)
@@ -200,7 +225,7 @@ app.layout = html.Div(className="page", children=[
 
         # Weather card
         html.Div(id="weather-card", className="card weather"),
-        dcc.Interval(id="weather-interval", interval=60000, n_intervals=0),
+        dcc.Interval(id="main-interval", interval=30000, n_intervals=0),
 
         html.Br(),
 
@@ -224,6 +249,14 @@ app.layout = html.Div(className="page", children=[
         html.Div(className="card recent", children=[
             html.H3("🕒 Recent Changes"),
             html.Div(id="recent-log")
+        ]),
+
+        html.Br(),
+
+        # Energy Graph
+        html.Div(className="card", children=[
+            html.H3("🔌 Weekly Energy Usage & Savings"),
+            dcc.Graph(id="energy-graph")
         ])
     ])
 ])
@@ -233,7 +266,7 @@ app.layout = html.Div(className="page", children=[
 # -----------------------------
 @app.callback(
     Output("weather-card", "children"),
-    Input("weather-interval", "n_intervals")
+    Input("main-interval", "n_intervals")
 )
 def update_weather(_):
     try:
@@ -249,6 +282,52 @@ def update_weather(_):
         ]
     except Exception as e:
         return [html.Small("Weather unavailable"), html.P(str(e))]
+
+# -----------------------------
+# Energy Graph Callback
+# -----------------------------
+@app.callback(
+    Output("energy-graph", "figure"),
+    Input("main-interval", "n_intervals")
+)
+def update_energy_graph(_):
+    fig = {
+        "data": [
+            {
+                "x": weekly_days,
+                "y": weekly_used,
+                "type": "line",
+                "mode": "lines+markers",
+                "name": "Energy Used (kWh)",
+                "line": {"color": "#007bff", "width": 3}
+            },
+            {
+                "x": weekly_days,
+                "y": weekly_saved,
+                "type": "line",
+                "mode": "lines+markers",
+                "name": "Energy Saved (kWh)",
+                "line": {"color": "#28a745", "width": 3}
+            },
+            {
+                "x": weekly_days,
+                "y": weekly_baseline,
+                "type": "line",
+                "mode": "lines+markers",
+                "name": "Baseline (No Automation)",
+                "line": {"color": "#ff4444", "width": 2, "dash": "dash"}
+            }
+        ],
+        "layout": {
+            "title": "Weekly Energy Usage & Savings",
+            "xaxis": {"title": "Day"},
+            "yaxis": {"title": "kWh"},
+            "paper_bgcolor": "rgba(0,0,0,0)",
+            "plot_bgcolor": "rgba(0,0,0,0)"
+        }
+    }
+
+    return fig
 
 # -----------------------------
 # Utility Callback
@@ -334,5 +413,3 @@ def update(*args):
 # -----------------------------
 if __name__ == "__main__":
     app.run(debug=True)
-
-
