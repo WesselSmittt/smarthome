@@ -6,6 +6,38 @@ from dotenv import load_dotenv
 import os
 
 # -----------------------------
+# SMART APP: actuator logica
+# -----------------------------
+
+def generate_smart_app_data(days=7):
+    data = []
+    base_date = datetime.date.today()
+    for i in range(days):
+        data.append({
+            "date": (base_date - datetime.timedelta(days=days-i-1)).strftime("%d-%m-%Y"),
+            "numPeople": random.randint(1,4),
+            "tempSetpoint": random.randint(18,22),
+            "tempOutside": random.randint(5,15),
+            "rainfall": random.randint(0,10)
+        })
+    return data
+
+def bereken_actuatoren(input_data):
+    result = []
+    for row in input_data:
+        temp_diff = row['tempSetpoint'] - row['tempOutside']
+        cv = 100 if temp_diff >= 20 else 50 if temp_diff >= 10 else 0
+        ventilatie = min(row['numPeople'], 4)
+        bewatering = row['rainfall'] < 3
+        result.append({"date": row['date'], "cv": cv, "ventilatie": ventilatie, "bewatering": bewatering})
+    return result
+
+# Genereer de data eenmalig bij opstarten
+smart_app_input = generate_smart_app_data()
+actuator_data = bereken_actuatoren(smart_app_input)
+
+
+# -----------------------------
 # PostgreSQL Configuration
 # -----------------------------
 load_dotenv()
@@ -257,11 +289,30 @@ app.layout = html.Div(className="page", children=[
         html.Div(className="card", children=[
             html.H3("🔌 Weekly Energy Usage & Savings"),
             dcc.Graph(id="energy-graph")
+        ]),
+
+        html.Br(),
+
+        # Smart App grafiek
+        html.Div(className="card", children=[
+            html.H3("⚡ Smart App Actuatoren"),
+            html.Label("Kies grafiektype:"),
+            dcc.Dropdown(
+                id="chart-type",
+                options=[
+                    {"label": "Lijn grafiek", "value": "line"},
+                    {"label": "Scatter plot", "value": "scatter"},
+                    {"label": "Staafdiagram", "value": "bar"}
+                ],
+                value="line"
+            ),
+            dcc.Graph(id="smart-graph")
         ])
+
     ])
 ])
 
-# -----------------------------
+    # -----------------------------
 # Weather Callback
 # -----------------------------
 @app.callback(
@@ -407,6 +458,34 @@ def update(*args):
         card("Door", "door", "🚪", status["door"]).children,
         recent_changes
     )
+
+@app.callback(
+    Output("smart-graph","figure"),
+    Input("chart-type","value"),
+    Input("main-interval","n_intervals")  # zodat de grafiek periodiek kan verversen
+)
+def update_smart_graph(chart_type, _):
+    x = [d["date"] for d in actuator_data]
+    cv = [d["cv"] for d in actuator_data]
+    vent = [d["ventilatie"] for d in actuator_data]
+    water = [1 if d["bewatering"] else 0 for d in actuator_data]  # bool -> 0/1
+
+    fig = {
+        "data": [
+            {"x": x, "y": cv, "type": chart_type, "name":"CV (%)"},
+            {"x": x, "y": vent, "type": chart_type, "name":"Ventilatie"},
+            {"x": x, "y": water, "type": chart_type, "name":"Bewatering"}
+        ],
+        "layout": {
+            "title":"Smart App Actuatoren",
+            "xaxis":{"title":"Datum"},
+            "yaxis":{"title":"Waarde"},
+            "paper_bgcolor":"rgba(0,0,0,0)",
+            "plot_bgcolor":"rgba(0,0,0,0)"
+        }
+    }
+    return fig
+
 
 # -----------------------------
 # Main
